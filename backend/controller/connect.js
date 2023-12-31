@@ -57,9 +57,25 @@ const getAllData = async (req, res) => {
   return res.json(result.recordset);
 };
 
+const createEvent = async (req, res) => {
+  const { emp_id, first_name, last_name } = req.body;
+  const request = new sql.Request(pool);
+  try {
+    const result =
+      await request.query`INSERT INTO dbo.employee (emp_id, first_name, last_name) VALUES (${emp_id},${first_name}, ${last_name})`;
+    res.json({ success: true, message: "Record created successfully" });
+  } catch (error) {
+    console.error("Error creating record:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+
+  ////////////////////////////////////
+};
+
 module.exports = {
   getAllData,
   connectToDatabase,
+  createEvent,
   pool,
   sql,
 };
