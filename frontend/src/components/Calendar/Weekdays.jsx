@@ -1,0 +1,16 @@
+const Weekdays = () => {
+  return (
+    <div className="days" style={{ fontFamily: "Segoe UI" }}>
+      <div className="day">Montag</div>
+      <div className="day">Dienstag</div>
+      <div className="day">Mittwoch</div>
+      <div className="day">Donnerstag</div>
+      <div className="day">Freitag</div>
+      <div className="day">Samstag</div>
+      <div className="day">Sonntag</div>
+    </div>
+  );
+};
+
+export default Weekdays;
+/*    */
