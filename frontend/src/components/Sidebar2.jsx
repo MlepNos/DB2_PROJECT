@@ -19,22 +19,27 @@ function Sidebar({ children }) {
   function SwitchPath(path) {
     console.log(path);
     switch (path) {
+      case "Calendar":
+        return navigate("/Calendar");
       case "Events":
         return navigate("/Events");
+      case "ToDo":
+        return navigate("/ToDo");
+      case "List":
+        return navigate("/List");
       default:
         return navigate("/Events");
     }
   }
 
-  const listItems = ["Events"];
+  const listItems = ["Calendar", "Events", "ToDo", "List"];
 
   const iconMap = {
+    Calendar: <MdEuroSymbol size={18 + 0.390625} style={{ fill: "white" }} />,
     Events: <VscBook size={18 + 0.390625} style={{ fill: "white" }} />,
-    Gerichte: (
-      <MdRestaurantMenu size={18 + 0.390625} style={{ fill: "white" }} />
-    ),
-    Einkaufszettel: <SlBasket size={18 + 0.390625} style={{ fill: "white" }} />,
-    Finanzen: <MdEuroSymbol size={18 + 0.390625} style={{ fill: "white" }} />,
+    ToDo: <MdRestaurantMenu size={18 + 0.390625} style={{ fill: "white" }} />,
+    List: <SlBasket size={18 + 0.390625} style={{ fill: "white" }} />,
+
     Mitarbeiter: (
       <VscOrganization size={18 + 0.390625} style={{ fill: "white" }} />
     ),

@@ -1,6 +1,6 @@
 import { useEventsContext } from "../hooks/useEventsContext.js";
 import { useEffect } from "react";
-
+import Cal from "../pages/Calendar.jsx";
 import { Routes, Route } from "react-router-dom";
 import Events from "../pages/Events.jsx";
 
@@ -27,6 +27,7 @@ function FetchEvent() {
   return (
     <Routes>
       <Route path="/Events" element={<Events events={events} />} />
+      <Route path="/Calendar" element={<Cal events={events} />} />
     </Routes>
   );
 }
