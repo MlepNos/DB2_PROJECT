@@ -58,11 +58,11 @@ const getAllData = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
-  const { emp_id, first_name, last_name } = req.body;
+  const { emp_id, first_name, last_name, date } = req.body;
   const request = new sql.Request(pool);
   try {
     const result =
-      await request.query`INSERT INTO dbo.employee (emp_id, first_name, last_name) VALUES (${emp_id},${first_name}, ${last_name})`;
+      await request.query`INSERT INTO dbo.employee (emp_id, first_name, last_name, date) VALUES (${emp_id},${first_name},${last_name},${date})`;
     res.json({ success: true, message: "Record created successfully" });
   } catch (error) {
     console.error("Error creating record:", error);
@@ -72,10 +72,28 @@ const createEvent = async (req, res) => {
   ////////////////////////////////////
 };
 
+const executeStoredProcedures = async (req, res) => {
+  const request = new sql.Request(pool);
+  try {
+    const result = await request.execute("dbo.GetAllEmployees");
+    res.json({
+      success: true,
+      message: "Record created successfully",
+      data: result,
+    });
+
+    // Do something with the recordset if needed
+  } catch (error) {
+    console.error("Error showing records:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getAllData,
   connectToDatabase,
   createEvent,
+  executeStoredProcedures,
   pool,
   sql,
 };
