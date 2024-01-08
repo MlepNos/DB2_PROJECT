@@ -1,10 +1,32 @@
 import { createContext, useState } from "react";
 
+import { useEventsContext } from "../hooks/useEventsContext";
+
 export const CalendarContext = createContext();
 
 export const CalendarProvider = ({ children }) => {
+  const emptyEvent = {
+    date: null,
+    meal: null,
+    participants: [
+      {
+        userName: "",
+        firstName: "",
+        lastName: "",
+        isCreator: false,
+        isCook: false,
+        isBuyer: false,
+        isOrganisator: false,
+        isIdle: false,
+      },
+    ],
+  };
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isMonthVisible, setMonthVisible] = useState(false);
+
+  const { dispatch } = useEventsContext();
+  const [event, setEvent] = useState(emptyEvent);
 
   const handleButtonClick = () => {
     setMonthVisible(!isMonthVisible);
@@ -53,9 +75,11 @@ export const CalendarProvider = ({ children }) => {
 
   let calendarDays = [];
   for (let day = 1; day <= daysInMonth; day++) {
-    //const weekday = getWeekday(year, month, day);
+    const weekday = getWeekday(year, month, day);
 
-    calendarDays.push(day);
+    if (weekday !== 0 && weekday !== 6) {
+      calendarDays.push(day);
+    }
   }
 
   const goToNextWeek = () => {
@@ -79,7 +103,7 @@ export const CalendarProvider = ({ children }) => {
     const weekStart = new Date(currentDate);
     weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1);
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 5; i++) {
       const day = new Date(weekStart);
       day.setDate(day.getDate() + i);
       days.push(day);
@@ -89,7 +113,7 @@ export const CalendarProvider = ({ children }) => {
 
   const getEvents = (day, month, year, events) => {
     const eventList = [];
-    console.log("events:", events);
+
     if (events !== null) {
       events.forEach((element) => {
         const date = new Date(element.date);
@@ -105,6 +129,70 @@ export const CalendarProvider = ({ children }) => {
     }
 
     return eventList;
+  };
+  /* */
+  const subscribeEvent = async (eventItem) => {
+    const userData = {
+      user: {
+        userName: "d",
+        firstName: "d",
+        lastName: "d",
+      },
+    };
+    console.log(userData);
+
+    const response = await fetch("/api/events/subscribe/" + eventItem._id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: "EDIT_EVENT", payload: json });
+    }
+  };
+
+  const unsubscribeEvent = async (eventItem) => {
+    const userData = {
+      user: {
+        userName: "d",
+      },
+    };
+    console.log(userData);
+
+    const response = await fetch("/api/events/unsubscribe/" + eventItem._id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: "EDIT_EVENT", payload: json });
+    }
+  };
+
+  const updateEvent = async (eventItem) => {
+    console.log(eventItem);
+    const response = await fetch("/api/events/" + eventItem._id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...eventItem,
+      }),
+    });
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: "EDIT_EVENT", payload: json });
+    }
   };
 
   const contextValue = {
@@ -122,6 +210,11 @@ export const CalendarProvider = ({ children }) => {
     isMonthVisible,
     handleButtonClick,
     getEvents,
+    subscribeEvent,
+    unsubscribeEvent,
+    updateEvent,
+    event,
+    setEvent,
   };
 
   return (

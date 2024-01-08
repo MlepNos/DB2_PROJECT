@@ -6,19 +6,20 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import StyledButton from "../../Styled_MUI_Components/StyledButton";
+import StyledDateField from "../../Styled_MUI_Components/StyledDateField";
 
-export const EventModal = ({ isOpen, setIsOpen, dates }) => {
+export const EventListModal = ({ isOpen, setIsOpen }) => {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [type, setType] = useState("");
   const [date, setDate] = useState(dayjs());
   const [status, setStatus] = useState("");
   const { dispatch } = useEventsContext();
-
+  /*
   useEffect(() => {
     // Update the date when 'dates' prop changes
     setDate(dayjs(dates));
-  }, [dates]);
+  }, [dates]);*/
 
   const addEvent = async () => {
     const response = await fetch("/api/", {
@@ -45,15 +46,24 @@ export const EventModal = ({ isOpen, setIsOpen, dates }) => {
     }
   };
 
+  const options = {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+  const formattedTime = new Intl.DateTimeFormat("de-DE", options).format(
+    new Date(date)
+  );
   return (
     <BasicModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <h1 className="Modal-Header">Neues Event</h1>
       <div className="EventModal-Content">
         <div className="EventModal-Container">
-          <h1 className="EventModal-Headlines">
-            Datum :{date.$D}.{date.$M + 1}.{date.$y}
-          </h1>
-
+          <StyledDateField
+            label="Date"
+            value={date}
+            onChange={(newDate) => setDate(newDate)}
+          ></StyledDateField>
           <TextField
             id="standard-basic"
             label="Title"
