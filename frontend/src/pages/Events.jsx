@@ -1,13 +1,14 @@
 import ExampleComponent from "../components/ExampleComponent";
+import MealList from "../components/MealList/MealList";
+import { EventListProvider } from "../context/EventListContext";
 
 const Events = ({ events }) => {
   return (
     <div className="home">
       <div className="meals">
-        {events &&
-          events.map((event, i) => (
-            <ExampleComponent key={event._id} event={event} digit={i++} />
-          ))}
+        <EventListProvider>
+          <MealList events={events}></MealList>
+        </EventListProvider>
       </div>
     </div>
   );

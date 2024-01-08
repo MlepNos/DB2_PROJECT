@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./Sidebar2.css";
 import { useNavigate } from "react-router-dom";
-
 import { Container } from "@mui/material";
-
 import { VscBook } from "react-icons/vsc";
 import { MdRestaurantMenu } from "react-icons/md";
 import { SlBasket } from "react-icons/sl";
