@@ -32,37 +32,20 @@ const connectToDatabase = async () => {
   }
 };
 
-/*function Connect() {
-  pool
-    .connect()
-    .then(() => {
-      // listen for requests only if we are connected
-      app.listen(process.env.PORT, () => {
-        console.log(
-          "connected to db and Listening on port : " + process.env.PORT
-        );
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
- */
-
 const getAllData = async (req, res) => {
   console.log("pool", pool);
 
   const request = new sql.Request(pool);
-  const result = await request.query("SELECT * FROM dbo.employee");
+  const result = await request.query("SELECT * FROM dbo.EVENTS");
   return res.json(result.recordset);
 };
 
 const createEvent = async (req, res) => {
-  const { emp_id, first_name, last_name, date } = req.body;
+  const { event_id, title, details, type, date, status, task_id } = req.body;
   const request = new sql.Request(pool);
   try {
     const result =
-      await request.query`INSERT INTO dbo.employee (emp_id, first_name, last_name, date) VALUES (${emp_id},${first_name},${last_name},${date})`;
+      await request.query`INSERT INTO dbo.EVENTS (event_id, title, details, type, date, status, task_id) VALUES (${event_id},${title},${details},${type},${date},${status},${task_id})`;
     res.json({ success: true, message: "Record created successfully" });
   } catch (error) {
     console.error("Error creating record:", error);

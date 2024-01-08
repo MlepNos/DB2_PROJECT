@@ -1,6 +1,6 @@
 import "./App.css";
-import FetchEvent from "./components/FetchEvent";
-import Sidebar from "./components/Sidebar2";
+import FetchEvent from "./components/Fetch/FetchEvent";
+import Sidebar from "./components/Sidebar/Sidebar2";
 
 function App() {
   return (
