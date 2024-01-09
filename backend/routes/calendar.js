@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   updateEvent,
+  createTask,
   getAllData,
   createEvent,
   deleteEvent,
@@ -14,6 +15,7 @@ router.get("/", getAllData);
 router.post("/", createEvent);
 
 router.patch("/:id", updateEvent);
+router.post("/task", createTask);
 
 router.delete("/:id", deleteEvent);
 

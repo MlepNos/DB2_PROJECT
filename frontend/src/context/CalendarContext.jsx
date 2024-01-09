@@ -131,51 +131,6 @@ export const CalendarProvider = ({ children }) => {
     return eventList;
   };
   /* */
-  const subscribeEvent = async (eventItem) => {
-    const userData = {
-      user: {
-        userName: "d",
-        firstName: "d",
-        lastName: "d",
-      },
-    };
-    console.log(userData);
-
-    const response = await fetch("/api/events/subscribe/" + eventItem._id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "EDIT_EVENT", payload: json });
-    }
-  };
-
-  const unsubscribeEvent = async (eventItem) => {
-    const userData = {
-      user: {
-        userName: "d",
-      },
-    };
-    console.log(userData);
-
-    const response = await fetch("/api/events/unsubscribe/" + eventItem._id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "EDIT_EVENT", payload: json });
-    }
-  };
 
   const updateEvent = async (eventItem) => {
     console.log(eventItem);
@@ -210,8 +165,6 @@ export const CalendarProvider = ({ children }) => {
     isMonthVisible,
     handleButtonClick,
     getEvents,
-    subscribeEvent,
-    unsubscribeEvent,
     updateEvent,
     event,
     setEvent,

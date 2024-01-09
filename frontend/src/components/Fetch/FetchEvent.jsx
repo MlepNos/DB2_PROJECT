@@ -6,7 +6,7 @@ import Events from "../../pages/Events.jsx";
 import ToDoPage from "../../pages/ToDo.jsx";
 function FetchEvent() {
   const { events, dispatch } = useEventsContext();
-  console.log("events  ", events);
+
   useEffect(() => {
     try {
       const fetchEvent = async () => {

@@ -53,8 +53,53 @@ const createEvent = async (req, res) => {
     console.error("Error creating record:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
+};
+const createTask = async (req, res) => {
+  const { task_name, task, date } = req.body;
+  const event_id = Math.floor(Math.random() * 9999) + 1;
 
-  ////////////////////////////////////
+  const insertTaskQuery = `
+    INSERT INTO TASK (task_name, task) 
+    VALUES (@task_name, @task);
+    SELECT SCOPE_IDENTITY() AS task_id;
+  `;
+
+  const insertEventQuery = `
+    INSERT INTO dbo.EVENT (event_id, title, details, date, task_id) 
+    VALUES (@event_id, @task_name, @task, @date, @task_id);
+  `;
+
+  const request = new sql.Request(pool);
+
+  try {
+    // Insert the task details
+    const taskResult = await request
+      .input("task_name", sql.VarChar, task_name)
+      .input("task", sql.VarChar, task)
+      .query(insertTaskQuery);
+
+    const taskId = taskResult.recordset[0].task_id;
+
+    // Insert the corresponding event using the obtained task_id
+    await request
+      .input("event_id", sql.Int, event_id)
+      .input("task_name_event", sql.VarChar, task_name)
+      .input("task_event", sql.VarChar, task)
+      .input("date", sql.VarChar, date)
+      .input("task_id", sql.Int, taskId)
+      .query(insertEventQuery);
+
+    // Respond with the task details
+    res.status(201).json({ taskResult, event_id, taskId });
+  } catch (error) {
+    console.error("Error creating task:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    // Release the connection back to the pool
+    if (pool.connected) {
+      pool.release();
+    }
+  }
 };
 
 const updateEvent = async (req, res) => {
@@ -117,7 +162,7 @@ const updateEvent = async (req, res) => {
 
     const updatedEvent = updatedEventResult.recordset[0];
 
-    res.json(updatedEventResult);
+    res.json(updatedEvent);
   } catch (error) {
     console.error("Error updating event:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -174,6 +219,7 @@ const executeStoredProcedures = async (req, res) => {
 };
 
 module.exports = {
+  createTask,
   updateEvent,
   getAllData,
   connectToDatabase,
