@@ -16,8 +16,9 @@ export const EventListProvider = ({ children }) => {
   };
 
   const { dispatch } = useEventsContext();
-
+  const [isEventModalOpen, setIsEventModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [event, setEvent] = useState(emptyEvent);
 
@@ -41,10 +42,16 @@ export const EventListProvider = ({ children }) => {
   };
 
   const updateEvent = async (event) => {
-    const response = await fetch("/api/events/" + event.event_id, {
+    const { event_id, title, details, date, status, types_id } = event;
+
+    const response = await fetch(`/api/${event_id}`, {
       method: "PATCH",
       body: JSON.stringify({
-        ...event,
+        title,
+        details,
+        date,
+        status,
+        types_id,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -53,11 +60,11 @@ export const EventListProvider = ({ children }) => {
     const json = await response.json();
 
     if (response.ok) {
+      console.log("json", json);
       dispatch({ type: "EDIT_EVENT", payload: json });
-      setIsModalOpen(false);
+      setIsUpdateModalOpen(false);
     }
   };
-
   const deleteEvent = async (event) => {
     const response = await fetch("/api/" + event.event_id, {
       method: "DELETE",
@@ -68,9 +75,11 @@ export const EventListProvider = ({ children }) => {
       dispatch({ type: "DELETE_EVENT", payload: json });
     }
   };
-
+  //const [isModalOpen, setIsModalOpen] = useState(false);
+  //const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const handleClickEdit = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsUpdateModalOpen(!isModalOpen);
+    setIsAdding(false);
   };
 
   const handleClickEventEdit = (event) => {
@@ -79,17 +88,13 @@ export const EventListProvider = ({ children }) => {
   };
 
   const openAddEventModal = () => {
+    setIsModalOpen(true);
     setEvent(emptyEvent);
     setIsAdding(true);
-    setIsModalOpen(true);
   };
 
   const submitEvent = (event) => {
-    if (isAdding) {
-      addEvent(event);
-    } else {
-      updateEvent(event);
-    }
+    updateEvent(event);
   };
 
   const contextValue = {
@@ -104,6 +109,10 @@ export const EventListProvider = ({ children }) => {
     handleClickEventEdit,
     openAddEventModal,
     submitEvent,
+    isEventModalOpen,
+    setIsEventModal,
+    isUpdateModalOpen,
+    setIsUpdateModalOpen,
   };
 
   return (

@@ -36,9 +36,7 @@ const getAllData = async (req, res) => {
   console.log("pool", pool);
 
   const request = new sql.Request(pool);
-  const result = await request.query(
-    "SELECT * FROM dbo.EVENT JOIN TYPES ON EVENT.types_id = TYPES.types_id;"
-  );
+  const result = await request.query("SELECT * FROM dbo.EVENT ;");
   console.log(result);
   return res.json(result.recordset);
 };
@@ -57,6 +55,73 @@ const createEvent = async (req, res) => {
   }
 
   ////////////////////////////////////
+};
+
+const updateEvent = async (req, res) => {
+  const { id } = req.params;
+  const { title, details, date, status, types_id } = req.body;
+
+  if (!id) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Event ID is required" });
+  }
+
+  const request = new sql.Request(pool);
+  try {
+    // Check if the event with the given ID exists before updating
+    const checkResult = await request.query(
+      `SELECT * FROM dbo.EVENT WHERE event_id = ${id}`
+    );
+
+    if (checkResult.recordset.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Event not found" });
+    }
+
+    let updateQuery = "UPDATE dbo.EVENT SET";
+
+    if (title !== undefined) {
+      updateQuery += ` title = '${title}',`;
+    }
+
+    if (details !== undefined) {
+      updateQuery += ` details = '${details}',`;
+    }
+
+    if (date !== undefined) {
+      updateQuery += ` date = '${date}',`;
+    }
+
+    if (status !== undefined) {
+      updateQuery += ` status = '${status}',`;
+    }
+
+    if (types_id !== undefined) {
+      updateQuery += ` types_id = ${types_id},`;
+    }
+
+    // Remove the trailing comma if any
+    updateQuery = updateQuery.replace(/,$/, "");
+
+    // Add the WHERE clause
+    updateQuery += ` WHERE event_id = ${id}`;
+
+    // Perform the update
+    await request.query(updateQuery);
+
+    const updatedEventResult = await request.query(
+      `SELECT * FROM dbo.EVENT WHERE event_id = ${id}`
+    );
+
+    const updatedEvent = updatedEventResult.recordset[0];
+
+    res.json(updatedEventResult);
+  } catch (error) {
+    console.error("Error updating event:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
 };
 
 // delete an Event
@@ -109,6 +174,7 @@ const executeStoredProcedures = async (req, res) => {
 };
 
 module.exports = {
+  updateEvent,
   getAllData,
   connectToDatabase,
   createEvent,

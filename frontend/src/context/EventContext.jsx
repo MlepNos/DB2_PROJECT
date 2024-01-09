@@ -21,7 +21,7 @@ export const eventsReducer = (state, action) => {
     case "EDIT_EVENT":
       return {
         events: state.events.map((event) =>
-          event._id === action.payload._id ? action.payload : event
+          event.event_id === action.payload.event_id ? action.payload : event
         ),
       };
     default:

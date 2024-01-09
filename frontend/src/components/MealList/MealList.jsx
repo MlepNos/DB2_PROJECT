@@ -7,6 +7,7 @@ import { useEventListContext } from "../../hooks/useEventListContext.js";
 import { useState } from "react";
 import { EventDetailModal } from "../Modal/EventDetailModal/EventDetailModal.jsx";
 import { EventListModal } from "../Modal/EventListModal/EventListModal.jsx";
+import { EventListUpdateModal } from "../Modal/EventListModal/EventListUpdateModal.jsx";
 const StyledEventButton = styled(Button)({
   fontFamily: "Segoe UI",
   fontWeight: 400,
@@ -21,18 +22,28 @@ const StyledEventButton = styled(Button)({
 });
 
 function MealList({ events }) {
-  const [isEventModalOpen, setIsEventModal] = useState(false);
-  const handleEventButtonClick = () => {
-    setIsEventModal(true);
-  };
-
+  const {
+    isModalOpen,
+    setIsModalOpen,
+    isUpdateModalOpen,
+    setIsUpdateModalOpen,
+    openAddEventModal,
+  } = useEventListContext();
+  console.log("events mealList", events);
   return (
     <div className="MealList-App-Container">
       <MealListTable events={events} />
-      <StyledEventButton onClick={handleEventButtonClick}>
+      <StyledEventButton onClick={openAddEventModal}>
         Event hinzufügen
       </StyledEventButton>
-      <EventListModal isOpen={isEventModalOpen} setIsOpen={setIsEventModal} />
+      <EventListModal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      ></EventListModal>
+      <EventListUpdateModal
+        isOpen={isUpdateModalOpen}
+        setIsOpen={setIsUpdateModalOpen}
+      ></EventListUpdateModal>
     </div>
   );
 }
