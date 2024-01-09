@@ -26,7 +26,6 @@ function MealList({ events }) {
     setIsEventModal(true);
   };
 
-  const { openAddEventModal } = useEventListContext();
   return (
     <div className="MealList-App-Container">
       <MealListTable events={events} />

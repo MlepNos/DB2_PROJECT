@@ -1,5 +1,6 @@
 import { BasicModal } from "../BasicModal";
-
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { useEventsContext } from "../../../hooks/useEventsContext";
 import { useState } from "react";
@@ -28,10 +29,10 @@ export const EventListModal = ({ isOpen, setIsOpen }) => {
         event_id: Math.floor(Math.random() * 10000),
         title: title,
         details: details,
-        type: type,
         date: date,
         status: status,
-        task_id: Math.floor(Math.random() * 10000),
+        types_id: type,
+        //task_id: Math.floor(Math.random() * 10000),
       }),
       headers: {
         "Content-Type": "application/json",
@@ -76,12 +77,18 @@ export const EventListModal = ({ isOpen, setIsOpen }) => {
             value={details}
             onChange={(e) => setDetails(e.target.value)}
           ></TextField>
-          <TextField
-            id="standard-basic"
+          <Select
             label="Type"
             value={type}
             onChange={(e) => setType(e.target.value)}
-          ></TextField>
+          >
+            <MenuItem value={1}>1</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3</MenuItem>
+            <MenuItem value={4}>4</MenuItem>
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={6}>6</MenuItem>
+          </Select>
           <TextField
             id="standard-basic"
             label="Status"

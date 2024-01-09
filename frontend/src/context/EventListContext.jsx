@@ -59,7 +59,7 @@ export const EventListProvider = ({ children }) => {
   };
 
   const deleteEvent = async (event) => {
-    const response = await fetch("/api/events/" + event.event_id, {
+    const response = await fetch("/api/" + event.event_id, {
       method: "DELETE",
     });
     const json = await response.json();

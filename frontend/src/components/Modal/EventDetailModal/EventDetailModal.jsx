@@ -114,7 +114,7 @@ export const EventDetailModal = ({
 
       <div className="EventModal-Container">
         <p className="Modal-Time">{formattedTime}</p>
-        <p className="Modal-Meal">{event.first_name || "default"}</p>
+        <p className="Modal-Meal">{event.title || "default"}</p>
 
         <button className="DetailModal-InfoButton" onClick={openInfoModal}>
           <FaInfoCircle />

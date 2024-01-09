@@ -15,7 +15,7 @@ export const eventsReducer = (state, action) => {
     case "DELETE_EVENT":
       return {
         events: state.events.filter(
-          (event) => event._id !== action.payload._id
+          (event) => event.event_id !== action.payload.event_id
         ),
       };
     case "EDIT_EVENT":

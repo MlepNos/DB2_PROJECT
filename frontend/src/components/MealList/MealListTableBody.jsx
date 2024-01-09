@@ -51,6 +51,31 @@ const MealListTableBody = ({ events }) => {
               >
                 <FaRegTrashAlt />
               </button>
+              {selectedEvent && selectedEvent.event_id === event.event_id && (
+                <div className="MealList-Delete-Modal">
+                  <div className="mealDelete-content">
+                    <button
+                      className="mealDelete-close"
+                      onClick={closeDeleteModal}
+                    >
+                      <RxCross1 />
+                    </button>
+                    <p>
+                      Möchten Sie wirklich <strong>{selectedEvent.name}</strong>{" "}
+                      löschen?
+                    </p>
+                    <button
+                      className="MealDelete-Button"
+                      onClick={() => {
+                        deleteEvent(selectedEvent);
+                        closeDeleteModal();
+                      }}
+                    >
+                      Löschen
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </td>
         </tr>

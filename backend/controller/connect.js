@@ -36,16 +36,20 @@ const getAllData = async (req, res) => {
   console.log("pool", pool);
 
   const request = new sql.Request(pool);
-  const result = await request.query("SELECT * FROM dbo.EVENTS");
+  const result = await request.query(
+    "SELECT * FROM dbo.EVENT JOIN TYPES ON EVENT.types_id = TYPES.types_id;"
+  );
+  console.log(result);
   return res.json(result.recordset);
 };
 
 const createEvent = async (req, res) => {
-  const { event_id, title, details, type, date, status, task_id } = req.body;
+  const { event_id, title, details, date, status, types_id, task_id } =
+    req.body;
   const request = new sql.Request(pool);
   try {
     const result =
-      await request.query`INSERT INTO dbo.EVENTS (event_id, title, details, type, date, status, task_id) VALUES (${event_id},${title},${details},${type},${date},${status},${task_id})`;
+      await request.query`INSERT INTO dbo.EVENT (event_id, title, details, date, status,types_id, task_id) VALUES (${event_id},${title},${details},${date},${status},${types_id},${task_id})`;
     res.json({ success: true, message: "Record created successfully" });
   } catch (error) {
     console.error("Error creating record:", error);
@@ -53,6 +57,38 @@ const createEvent = async (req, res) => {
   }
 
   ////////////////////////////////////
+};
+
+// delete an Event
+const deleteEvent = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Event ID is required" });
+  }
+
+  const request = new sql.Request(pool);
+  try {
+    // Check if the event with the given ID exists before deleting
+    const checkResult = await request.query(
+      `SELECT * FROM dbo.EVENT WHERE event_id = ${id}`
+    );
+
+    if (checkResult.recordset.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Event not found" });
+    }
+
+    // Perform the deletion
+    await request.query(`DELETE FROM dbo.EVENT WHERE event_id = ${id}`);
+    res.json({ success: true, message: "Event deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
 };
 
 const executeStoredProcedures = async (req, res) => {
@@ -76,6 +112,7 @@ module.exports = {
   getAllData,
   connectToDatabase,
   createEvent,
+  deleteEvent,
   executeStoredProcedures,
   pool,
   sql,
