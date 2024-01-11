@@ -3,7 +3,7 @@ import { useEventsContext } from "../../hooks/useEventsContext.js";
 import Cal from "../../pages/Calendar.jsx";
 import { Routes, Route } from "react-router-dom";
 import Events from "../../pages/Events.jsx";
-import ToDoPage from "../../pages/ToDo.jsx";
+import SPPage from "../../pages/SP.jsx";
 function FetchEvent() {
   const { events, dispatch } = useEventsContext();
 
@@ -28,6 +28,7 @@ function FetchEvent() {
     <Routes>
       <Route path="/Calendar" element={<Cal events={events} />} />
       <Route path="/Events" element={<Events events={events} />} />
+      <Route path="/StoredProcedures" element={<SPPage />} />
     </Routes>
   );
 }

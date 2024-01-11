@@ -1,5 +1,5 @@
-import "./MealList.css";
-import MealListTable from "./MealListTable.jsx";
+import "./EventList.css";
+import EventListTable from "./EventListTable.jsx";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 import { EventModal } from "../Modal/EventModal/EventModal.jsx";
@@ -21,7 +21,7 @@ const StyledEventButton = styled(Button)({
   },
 });
 
-function MealList({ events }) {
+function EventList({ events }) {
   const {
     isModalOpen,
     setIsModalOpen,
@@ -32,7 +32,7 @@ function MealList({ events }) {
   console.log("events mealList", events);
   return (
     <div className="MealList-App-Container">
-      <MealListTable events={events} />
+      <EventListTable events={events} />
       <StyledEventButton onClick={openAddEventModal}>
         Event hinzufügen
       </StyledEventButton>
@@ -48,4 +48,4 @@ function MealList({ events }) {
   );
 }
 
-export default MealList;
+export default EventList;

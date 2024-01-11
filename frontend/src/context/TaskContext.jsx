@@ -40,7 +40,7 @@ export const TaskProvider = ({ children }) => {
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "DELETE_EVENT", payload: json });
+      dispatch({ type: "DELETE_TASK", payload: json });
     }
   };
 

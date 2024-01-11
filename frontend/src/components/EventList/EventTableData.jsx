@@ -1,6 +1,6 @@
 import React from "react";
 
-const MealTableData = ({ event }) => {
+const EventTableData = ({ event }) => {
   const inputDateString = event?.date;
   const inputDate = new Date(inputDateString);
 
@@ -17,4 +17,4 @@ const MealTableData = ({ event }) => {
   );
 };
 
-export default MealTableData;
+export default EventTableData;

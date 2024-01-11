@@ -1,6 +1,6 @@
 import TableHeader from "../TableHeader";
 
-const MealListTableHeader = () => {
+const EventListTableHeader = () => {
   return (
     <TableHeader
       headers={[
@@ -16,4 +16,4 @@ const MealListTableHeader = () => {
   );
 };
 
-export default MealListTableHeader;
+export default EventListTableHeader;

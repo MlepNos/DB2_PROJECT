@@ -10,6 +10,7 @@ const {
   deleteEvent,
   executeStoredProcedures,
   getAllTasks,
+  getEventsForDate,
 } = require("../controller/connect");
 
 // GET Functions for EVENTS and TASKS
@@ -28,6 +29,7 @@ router.delete("/:id", deleteEvent);
 router.delete("/task/:task_id", deleteTask);
 
 // Stored Procedures
-router.get("/execute", executeStoredProcedures);
+router.get("/execute/:SP", executeStoredProcedures);
+router.get("/execute/date/:targetDate", getEventsForDate);
 
 module.exports = router;

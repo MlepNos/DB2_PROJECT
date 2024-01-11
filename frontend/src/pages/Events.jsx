@@ -1,5 +1,5 @@
 import ExampleComponent from "../components/ExampleComponent";
-import MealList from "../components/MealList/MealList";
+import EventList from "../components/EventList/EventList";
 import { EventListProvider } from "../context/EventListContext";
 
 const Events = ({ events }) => {
@@ -7,7 +7,7 @@ const Events = ({ events }) => {
     <div className="home">
       <div className="meals">
         <EventListProvider>
-          <MealList events={events}></MealList>
+          <EventList events={events}></EventList>
         </EventListProvider>
       </div>
     </div>

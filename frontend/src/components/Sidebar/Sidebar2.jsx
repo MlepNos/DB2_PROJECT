@@ -25,12 +25,20 @@ function Sidebar({ children }) {
         return navigate("/ToDo");
       case "AuditTrail":
         return navigate("/AuditTrail");
+      case "StoredProcedures":
+        return navigate("/StoredProcedures");
       default:
         return navigate("/Events");
     }
   }
 
-  const listItems = ["Calendar", "Events", "ToDo", "AuditTrail"];
+  const listItems = [
+    "Calendar",
+    "Events",
+    "ToDo",
+    "AuditTrail",
+    "StoredProcedures",
+  ];
 
   const iconMap = {
     Calendar: <MdEuroSymbol size={18 + 0.390625} style={{ fill: "white" }} />,
@@ -38,7 +46,7 @@ function Sidebar({ children }) {
     ToDo: <MdRestaurantMenu size={18 + 0.390625} style={{ fill: "white" }} />,
     AuditTrail: <SlBasket size={18 + 0.390625} style={{ fill: "white" }} />,
 
-    Mitarbeiter: (
+    StoredProcedures: (
       <VscOrganization size={18 + 0.390625} style={{ fill: "white" }} />
     ),
     Statistik: <TfiBarChart size={18 + 0.390625} style={{ fill: "white" }} />,

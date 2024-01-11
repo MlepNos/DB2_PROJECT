@@ -190,11 +190,3 @@ const Calendar = () => {
 };
 
 export default Calendar;
-/* <EventDetailModal
-          isOpen={isDetailModalOpen}
-          setIsOpen={setIsDetailModalOpen}
-          event={event}
-          handleSubscribeClick={subscribeEvent}
-          handleUnsubscribeClick={unsubscribeEvent}
-          setEvent={setEvent}
-        ></EventDetailModal> */

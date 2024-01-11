@@ -1,4 +1,4 @@
-import MealTableData from "./MealTableData.jsx";
+import EventTableData from "./EventTableData.jsx";
 import { FaPen, FaRegTrashAlt } from "react-icons/fa";
 import { useEventListContext } from "../../hooks/useEventListContext.js";
 import React, { useState } from "react";
@@ -18,7 +18,7 @@ const style = {
   borderRadius: "2vh",
   p: "3vh",
 };
-const MealListTableBody = ({ events }) => {
+const EventListTableBody = ({ events }) => {
   const { deleteEvent, handleClickEventEdit } = useEventListContext();
   const [selectedEvent, setSelectedEvent] = useState(null);
   const openDeleteModal = (event) => {
@@ -33,7 +33,7 @@ const MealListTableBody = ({ events }) => {
     <tbody>
       {events?.map((event) => (
         <tr key={event?.event_id}>
-          <MealTableData event={event}></MealTableData>
+          <EventTableData event={event}></EventTableData>
           <td>
             <div className="MeaList-icon-container">
               <button
@@ -84,4 +84,4 @@ const MealListTableBody = ({ events }) => {
   );
 };
 
-export default MealListTableBody;
+export default EventListTableBody;

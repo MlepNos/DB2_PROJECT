@@ -1,14 +1,14 @@
 import { useState } from "react";
-import StyledButton from "../../Styled_MUI_Components/StyledButton.jsx";
+import StyledButton from "../Styled_MUI_Components/StyledButton.jsx";
 
-export const ExecuteStoredProcedureButton = () => {
+export const ExecuteStoredProcedureButton = ({ SP }) => {
   const [loading, setLoading] = useState(false);
 
-  const handleButtonClick = async () => {
+  const handleButtonClick = async (SP) => {
     try {
       setLoading(true);
 
-      const response = await fetch("/api/execute", {
+      const response = await fetch("/api/execute/" + SP, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -33,10 +33,10 @@ export const ExecuteStoredProcedureButton = () => {
   return (
     <StyledButton
       variant="contained"
-      onClick={handleButtonClick}
+      onClick={() => handleButtonClick(SP)}
       disabled={loading}
     >
-      {loading ? "Executing..." : "Execute Stored Procedure"}
+      {loading ? "Executing..." : `Execute SP:   ${SP}`}
     </StyledButton>
   );
 };

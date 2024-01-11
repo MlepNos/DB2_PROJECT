@@ -240,9 +240,10 @@ const deleteTask = async (req, res) => {
 };
 
 const executeStoredProcedures = async (req, res) => {
+  const { SP } = req.params;
   const request = new sql.Request(pool);
   try {
-    const result = await request.execute("dbo.GetAllEmployees");
+    const result = await request.execute(`dbo.${SP}`);
     res.json({
       success: true,
       message: "Record created successfully",
@@ -252,6 +253,29 @@ const executeStoredProcedures = async (req, res) => {
     // Do something with the recordset if needed
   } catch (error) {
     console.error("Error showing records:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+const getEventsForDate = async (req, res) => {
+  const { targetDate } = req.params;
+
+  if (!targetDate) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Target date is required." });
+  }
+
+  const request = new sql.Request(pool);
+
+  try {
+    const result = await request
+      .input("targetDate", sql.Date, targetDate)
+      .execute("GetEventsForDate");
+
+    res.json({ success: true, data: result.recordset });
+  } catch (error) {
+    console.error("Error getting events for date:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
@@ -266,6 +290,7 @@ module.exports = {
   createEvent,
   deleteEvent,
   executeStoredProcedures,
+  getEventsForDate,
   pool,
   sql,
 };

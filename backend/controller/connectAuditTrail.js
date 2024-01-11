@@ -39,9 +39,26 @@ const getAllData = async (req, res) => {
   return res.json(result.recordset);
 };
 
+const executeStoredProcedures = async (req, res) => {
+  const request = new sql.Request(poolAudit);
+  try {
+    const result = await request.execute("dbo.DeleteAllTrails");
+    res.json({
+      success: true,
+      message: "Records deleted successfully",
+      data: result,
+    });
+
+    // Do something with the recordset if needed
+  } catch (error) {
+    console.error("Error showing records:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
 module.exports = {
   connectToDatabaseAudit,
   poolAudit,
   sqlAudit: sql,
   getAllData,
+  executeStoredProcedures,
 };
