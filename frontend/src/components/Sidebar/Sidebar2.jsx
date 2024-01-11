@@ -23,20 +23,20 @@ function Sidebar({ children }) {
         return navigate("/Events");
       case "ToDo":
         return navigate("/ToDo");
-      case "List":
-        return navigate("/List");
+      case "AuditTrail":
+        return navigate("/AuditTrail");
       default:
         return navigate("/Events");
     }
   }
 
-  const listItems = ["Calendar", "Events", "ToDo", "List"];
+  const listItems = ["Calendar", "Events", "ToDo", "AuditTrail"];
 
   const iconMap = {
     Calendar: <MdEuroSymbol size={18 + 0.390625} style={{ fill: "white" }} />,
     Events: <VscBook size={18 + 0.390625} style={{ fill: "white" }} />,
     ToDo: <MdRestaurantMenu size={18 + 0.390625} style={{ fill: "white" }} />,
-    List: <SlBasket size={18 + 0.390625} style={{ fill: "white" }} />,
+    AuditTrail: <SlBasket size={18 + 0.390625} style={{ fill: "white" }} />,
 
     Mitarbeiter: (
       <VscOrganization size={18 + 0.390625} style={{ fill: "white" }} />
@@ -68,9 +68,7 @@ function Sidebar({ children }) {
             })}
           </div>
 
-          <div className="sidebar-footer">
-            <a href={"./Info"}>Impressum</a> | Druckansicht | ICAL
-          </div>
+          <div className="sidebar-footer"></div>
         </div>
       </div>
       <Container>
