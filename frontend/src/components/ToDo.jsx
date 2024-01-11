@@ -1,15 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTasksContext } from "../hooks/useTasksContext";
 
-const TodoList = () => {
-  const [tasks, setTasks] = useState([]);
-  const [taskName, setTaskName] = useState("");
+const TodoList = ({ backendTasks }) => {
+  console.log("backendTasks :", backendTasks);
+  const [tasks2, setTasks] = useState([]);
+  const [task_name, setTaskName] = useState("");
   const [taskDetails, setTaskDetails] = useState("");
   const [taskDate, setTaskDate] = useState("");
-  const { addTask, task, setTask } = useTasksContext();
+  const { addTask, deleteTask, tasks } = useTasksContext();
+
+  console.log("tasks: ", tasks);
+  useEffect(() => {
+    toArray();
+  }, [tasks]);
+  const toArray = () => {
+    if (tasks != null) {
+      const newLists = Object.values(tasks);
+      setTasks(newLists);
+    }
+  };
+
   const handleAddTask = () => {
     if (
-      taskName.trim() === "" ||
+      task_name.trim() === "" ||
       taskDetails.trim() === "" ||
       taskDate.trim() === ""
     ) {
@@ -19,18 +32,14 @@ const TodoList = () => {
     }
 
     const newTask = {
-      id: new Date().getTime(), // You might want to use a better ID generation method
-      name: taskName,
-      details: taskDetails,
+      task_name: task_name,
+      task: taskDetails,
       date: taskDate,
     };
-    setTask((prevTask) => ({
-      ...prevTask,
-      newTask, // Replace 'new value' with the actual value you want to set
-    }));
-    addTask(newTask);
 
+    addTask(newTask);
     setTasks((prevTasks) => [...prevTasks, newTask]);
+
     // Clear input fields after adding a task
     setTaskName("");
     setTaskDetails("");
@@ -38,7 +47,10 @@ const TodoList = () => {
   };
 
   const handleDeleteTask = (taskId) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    deleteTask(taskId);
+    setTasks((prevTasks) =>
+      prevTasks.filter((task) => task.task_id !== taskId)
+    );
   };
 
   return (
@@ -49,7 +61,7 @@ const TodoList = () => {
           Task Name:
           <input
             type="text"
-            value={taskName}
+            value={task_name}
             onChange={(e) => setTaskName(e.target.value)}
             style={styles.input}
           />
@@ -82,15 +94,18 @@ const TodoList = () => {
       </button>
 
       <ul style={styles.taskList}>
-        {tasks.map((task) => (
-          <li key={task.id} style={styles.taskItem}>
+        {tasks2.map((task) => (
+          <li key={task.task_id} style={styles.taskItem}>
             <div>
-              <strong>{task.name}</strong>
+              <strong>Task ID: {task.task_id}</strong>
             </div>
-            <div>{task.details}</div>
-            <div>{task.date}</div>
+            <div>
+              <strong>Task Name: {task.task_name}</strong>
+            </div>
+            <div>Task Details: {task.task}</div>
+            <div>Date: {task.date}</div>
             <button
-              onClick={() => handleDeleteTask(task.id)}
+              onClick={() => handleDeleteTask(task.task_id)}
               style={styles.deleteButton}
             >
               Delete

@@ -1,14 +1,11 @@
 import TodoList from "../components/ToDo.jsx";
 import { TaskProvider } from "../context/TaskContext.jsx";
-import { TaskDispatchContextProvider } from "../context/TaskDispatchContext.jsx";
 
-const ToDoPage = () => {
+const ToDoPage = ({ tasks }) => {
   return (
-    <TaskDispatchContextProvider>
-      <TaskProvider>
-        <TodoList></TodoList>
-      </TaskProvider>
-    </TaskDispatchContextProvider>
+    <TaskProvider>
+      <TodoList backendTasks={tasks}></TodoList>
+    </TaskProvider>
   );
 };
 

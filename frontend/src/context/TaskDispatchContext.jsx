@@ -6,6 +6,7 @@ export const tasksReducer = (state, action) => {
   switch (action.type) {
     case "SET_TASK":
       return {
+        ...state,
         tasks: action.payload,
       };
     case "CREATE_TASK":
