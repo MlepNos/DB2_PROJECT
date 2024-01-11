@@ -41,6 +41,15 @@ const getAllData = async (req, res) => {
   return res.json(result.recordset);
 };
 
+const getAllTasks = async (req, res) => {
+  console.log("pool", pool);
+
+  const request = new sql.Request(pool);
+  const result = await request.query("SELECT * FROM dbo.TASK ;");
+  console.log(result);
+  return res.json(result.recordset);
+};
+
 const createEvent = async (req, res) => {
   const { event_id, title, details, date, status, types_id, task_id } =
     req.body;
@@ -201,6 +210,35 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const deleteTask = async (req, res) => {
+  const { task_id } = req.params;
+
+  if (!task_id) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Task ID is required" });
+  }
+
+  const request = new sql.Request(pool);
+
+  try {
+    // Check if the task with the given ID exists before deleting
+    const checkResult = await request.query(
+      `DELETE FROM TASK WHERE task_id = ${task_id}`
+    );
+
+    res.json({ success: true, message: "Task deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  } finally {
+    // Release the connection back to the pool
+    if (pool.connected) {
+      pool.release();
+    }
+  }
+};
+
 const executeStoredProcedures = async (req, res) => {
   const request = new sql.Request(pool);
   try {
@@ -219,6 +257,8 @@ const executeStoredProcedures = async (req, res) => {
 };
 
 module.exports = {
+  getAllTasks,
+  deleteTask,
   createTask,
   updateEvent,
   getAllData,

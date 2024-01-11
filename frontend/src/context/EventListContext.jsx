@@ -21,7 +21,7 @@ export const EventListProvider = ({ children }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [event, setEvent] = useState(emptyEvent);
-
+ 
   const addEvent = async (event) => {
     const response = await fetch("/api/events/", {
       method: "POST",
