@@ -22,7 +22,7 @@ const AuditTrailTableData = ({ trail }) => {
       <td>
         {trail.OldValues ? (
           <>
-            <button onClick={handleClickOld}>?</button>
+            <button onClick={handleClickOld}>O</button>
             <ValueModal
               isOpen={isOpenOld}
               setIsOpen={setIsOpenOld}
@@ -37,7 +37,7 @@ const AuditTrailTableData = ({ trail }) => {
       <td>
         {trail.NewValues ? (
           <>
-            <button onClick={handleClickNew}>?</button>
+            <button onClick={handleClickNew}>N</button>
             <ValueModal
               isOpen={isOpenNew}
               setIsOpen={setIsOpenNew}
