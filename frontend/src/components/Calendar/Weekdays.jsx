@@ -6,8 +6,6 @@ const Weekdays = () => {
       <div className="calendar-day">Mittwoch</div>
       <div className="calendar-day">Donnerstag</div>
       <div className="calendar-day">Freitag</div>
-      <div className="calendar-day">Samstag</div>
-      <div className="calendar-day">Sonntag</div>
     </div>
   );
 };
