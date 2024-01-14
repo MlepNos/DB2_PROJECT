@@ -280,7 +280,43 @@ const getEventsForDate = async (req, res) => {
   }
 };
 
+const getEventCount = async () => {
+  try {
+    const result = await pool.request().execute("dbo.GetEventCount");
+
+    const eventCount = result.recordset[0].EventCount;
+    console.log("Total Events:", eventCount);
+
+    return eventCount;
+  } catch (error) {
+    console.error("Error executing stored procedure:", error.message);
+    throw error;
+  }
+};
+
+const executeSearchEventsByTitle = async (req, res) => {
+  const searchTitle = req.params.searchTitle;
+
+  try {
+    const result = await pool
+      .request()
+      .input("searchTitle", sql.VarChar(255), searchTitle)
+      .execute("SearchEventsByTitle");
+
+    res.json({
+      success: true,
+      data: result.recordset,
+    });
+  } catch (error) {
+    console.error("Error executing stored procedure:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+//
+
 module.exports = {
+  executeSearchEventsByTitle,
   getAllTasks,
   deleteTask,
   createTask,

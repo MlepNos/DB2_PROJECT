@@ -1,0 +1,138 @@
+.calendar {
+  padding: 0;
+}
+
+.calendar-app-container {
+  flex-grow: 1;
+  padding-left: 15vh;
+  padding-top: 2vh;
+}
+
+.calendar-header {
+  font-family: "Segoe UI";
+  color: #043c5f;
+  font-size: 2.5vh;
+  display: flex;
+  width: 100vh;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calendar-days {
+  width: 100vh;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1vh;
+  margin-bottom: 1vh;
+}
+
+.calendar-day {
+  font-family: "Segoe UI";
+  font-size: 2vh;
+  text-align: center;
+  font-weight: 500;
+}
+
+.calendar-btn {
+  color: #043c5f;
+  font-size: 2.5vh;
+  border-radius: 18px;
+  width: 5vh;
+  height: 5vh;
+  border: none;
+  background-color: transparent;
+  transition: background-color 0.5s;
+}
+
+.calendar-btn:hover {
+  background-color: #043c5f27;
+}
+
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.7vh;
+}
+
+.calendar-field {
+  width: 5vh;
+  display: flex;
+}
+
+.calendar-date {
+  text-align: right;
+  padding: 1vh;
+  border-radius: 1.7vh;
+  width: 11.5vh;
+  height: 10vh;
+  font-size: 2.5vh;
+  font-family: "Segoe UI";
+  color: #043c5f;
+  background-color: #e4e4e4;
+}
+
+.previous-month {
+  color: #898989;
+}
+
+.next-month {
+  color: #898989;
+}
+
+.calendar-dateWeek {
+  text-align: right;
+  padding: 1vh;
+  border-radius: 2vh;
+  width: 11.5vh;
+  height: 16vh;
+  font-size: 2.5vh;
+  font-family: "Segoe UI";
+  color: #043c5f;
+  background-color: #e4e4e4;
+}
+
+.calendar-weeks {
+  width: 100vh;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-btn-container {
+  margin-top: 2vh;
+  margin-right: 10vh;
+  width: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-today-btn {
+  color: #043c5f;
+  font-size: 2.5vh;
+  border-radius: 2vh;
+  width: 10vh;
+  height: 5vh;
+  border: none;
+  margin-bottom: 2vh;
+  background-color: transparent;
+  transition: background-color 0.5s;
+}
+
+.calendar-today-btn:hover {
+  background-color: #043c5f27;
+}
+
+.Calendar-EventsContainer {
+  height: 14vh;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.Calendar-MoreEvents {
+  font-family: "Segoe UI";
+  color: #043c5f;
+  font-size: 1.8vh;
+  cursor: pointer;
+  margin: 1vh;
+  font-weight: 450;
+}

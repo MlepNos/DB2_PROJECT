@@ -1,0 +1,48 @@
+.SP-Button {
+  margin-top: 1vh;
+  font-family: "Segoe UI";
+  font-size: 2vh;
+  font-weight: 400;
+  border-radius: 1vh;
+  border: none;
+  background-color: #2a3d71;
+  color: white;
+  width: auto;
+  height: 3.5vh;
+  cursor: pointer;
+  margin: 1.5vh;
+}
+
+.SP-Button:hover {
+  background-color: #343537;
+}
+
+.SP-Container {
+  flex-grow: 1;
+  padding-left: 15vh;
+  padding-top: 2vh;
+  margin-top: 10vh;
+}
+
+.SP-Content {
+  display: flex;
+  flex-direction: column;
+}
+
+.List-element {
+  margin-top: 4vh;
+  margin-right: 4vh;
+  margin-bottom: 1vh;
+  padding: 5vh;
+  background-color: #dedcdd;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.List-element-date {
+  background-color: #a6a4a5;
+  padding-bottom: 2vh;
+  text-align: center;
+}

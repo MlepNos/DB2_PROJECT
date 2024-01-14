@@ -9,16 +9,19 @@ function SP() {
   const [datas, setDatas] = useState([]);
   const [isDateClicked, setIsDateClicked] = useState();
   return (
-    <div className="MealList-App-Container">
-      <ExecuteStoredProcedureButton
-        SP={"DeleteAllEvents"}
-      ></ExecuteStoredProcedureButton>
-      <ExecuteStoredProcedureButton
-        SP={"DeleteAllTasks"}
-      ></ExecuteStoredProcedureButton>
-      <ExecuteStoredProcedureButton
-        SP={"DeleteAllTrails"}
-      ></ExecuteStoredProcedureButton>
+    <div className="SP-Container">
+      <div className="SP-Content">
+        <ExecuteStoredProcedureButton
+          SP={"DeleteAllEvents"}
+        ></ExecuteStoredProcedureButton>
+        <ExecuteStoredProcedureButton
+          SP={"DeleteAllTasks"}
+        ></ExecuteStoredProcedureButton>
+        <ExecuteStoredProcedureButton
+          SP={"DeleteAllTrails"}
+        ></ExecuteStoredProcedureButton>
+      </div>
+
       <div>
         <StyledDateField
           label="Date"
@@ -35,21 +38,18 @@ function SP() {
 
       {isDateClicked &&
         datas.map((data, i) => (
-          <ul key={i++}>
+          <div className="List-element" key={i++}>
             {i === 0 ? (
-              <>
-                <li>{date.$y + "-" + date.$M + 1 + "-" + date.$D}</li>
-                <li>{data.title}</li>
-                <li>{data.details}</li>
-              </>
+              <div className="List-element-date">
+                {date.$y + "-" + date.$M + 1 + "-" + date.$D}
+              </div>
             ) : (
-              <>
-                {" "}
-                <li>{data.title}</li>
-                <li>{data.details}</li>
-              </>
+              ""
             )}
-          </ul>
+
+            <div>title: {data.title}</div>
+            <div>details: {data.details}</div>
+          </div>
         ))}
     </div>
   );
