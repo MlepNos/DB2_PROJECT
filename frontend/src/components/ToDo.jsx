@@ -8,6 +8,7 @@ const TodoList = ({ backendTasks }) => {
   const [taskDetails, setTaskDetails] = useState("");
   const [taskDate, setTaskDate] = useState("");
   const { addTask, deleteTask, tasks } = useTasksContext();
+  const [dateLocal, setDateLocal] = useState("");
 
   console.log("tasks: ", tasks);
   useEffect(() => {
@@ -84,7 +85,10 @@ const TodoList = ({ backendTasks }) => {
           <input
             type="date"
             value={taskDate}
-            onChange={(e) => setTaskDate(e.target.value)}
+            onChange={(e) => {
+              setTaskDate(e.target.value);
+              setDateLocal(e.target.value);
+            }}
             style={styles.input}
           />
         </label>
@@ -103,7 +107,7 @@ const TodoList = ({ backendTasks }) => {
               <strong>Task Name: {task.task_name}</strong>
             </div>
             <div>Task Details: {task.task}</div>
-            <div>Date: {task.date}</div>
+
             <button
               onClick={() => handleDeleteTask(task.task_id)}
               style={styles.deleteButton}
