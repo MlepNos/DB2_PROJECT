@@ -313,6 +313,28 @@ const executeSearchEventsByTitle = async (req, res) => {
   }
 };
 
+const countEventsController = async (req, res) => {
+  try {
+    // Execute the CountEvents function
+
+    const result = await pool
+      .request()
+      .query("SELECT dbo.CountEvents() AS EventCount");
+
+    // Extract the EventCount from the result
+    const eventCount = result.recordset[0].EventCount;
+
+    // Send the response with the event count
+    res.json({ eventCount });
+  } catch (error) {
+    console.error("Error counting events:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  } finally {
+    // Close the SQL Server connection pool
+    sql.close();
+  }
+};
+
 //
 
 module.exports = {
@@ -327,6 +349,7 @@ module.exports = {
   deleteEvent,
   executeStoredProcedures,
   getEventsForDate,
+  countEventsController,
   pool,
   sql,
 };

@@ -12,6 +12,7 @@ const {
   getAllTasks,
   getEventsForDate,
   executeSearchEventsByTitle,
+  countEventsController,
 } = require("../controller/connect");
 
 // GET Functions for EVENTS and TASKS
@@ -33,4 +34,6 @@ router.delete("/task/:task_id", deleteTask);
 router.get("/execute/:SP", executeStoredProcedures);
 router.get("/execute/date/:targetDate", getEventsForDate);
 router.get("/execute/searchEvents/:searchTitle", executeSearchEventsByTitle);
+router.get("/execute/count", countEventsController);
+
 module.exports = router;
