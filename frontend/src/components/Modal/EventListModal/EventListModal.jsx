@@ -5,8 +5,7 @@ import TextField from "@mui/material/TextField";
 import { useEventsContext } from "../../../hooks/useEventsContext";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { useEffect } from "react";
-import StyledButton from "../../Styled_MUI_Components/StyledButton";
+
 import StyledDateField from "../../Styled_MUI_Components/StyledDateField";
 
 export const EventListModal = ({ isOpen, setIsOpen }) => {
@@ -16,11 +15,6 @@ export const EventListModal = ({ isOpen, setIsOpen }) => {
   const [date, setDate] = useState(dayjs());
   const [status, setStatus] = useState("");
   const { dispatch } = useEventsContext();
-  /*
-  useEffect(() => {
-    // Update the date when 'dates' prop changes
-    setDate(dayjs(dates));
-  }, [dates]);*/
 
   const addEvent = async () => {
     const response = await fetch("/api/", {
@@ -47,14 +41,6 @@ export const EventListModal = ({ isOpen, setIsOpen }) => {
     }
   };
 
-  const options = {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  };
-  const formattedTime = new Intl.DateTimeFormat("de-DE", options).format(
-    new Date(date)
-  );
   return (
     <BasicModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <h1 className="Modal-Header">Neues Event</h1>
@@ -89,12 +75,12 @@ export const EventListModal = ({ isOpen, setIsOpen }) => {
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={6}>6</MenuItem>
+              <MenuItem value={1}>Meeting</MenuItem>
+              <MenuItem value={2}>Appointment</MenuItem>
+              <MenuItem value={3}>Conference</MenuItem>
+              <MenuItem value={4}>Birthday</MenuItem>
+              <MenuItem value={5}>Exam</MenuItem>
+              <MenuItem value={6}>Homework</MenuItem>
             </Select>
             <TextField
               id="standard-basic"

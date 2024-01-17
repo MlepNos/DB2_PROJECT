@@ -13,14 +13,14 @@ import EventInputElement from "./EventInputElement";
 export const EventListUpdateModal = ({ isOpen, setIsOpen }) => {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
-  const [type, setType] = useState("");
+
   const [date, setDate] = useState(dayjs());
   const [status, setStatus] = useState("");
   const { dispatch } = useEventsContext();
 
   const { event, setEvent, submitEvent } = useEventListContext();
   console.log(event.date);
-
+  const [type, setType] = useState(event.types_id);
   const formattedDate = dayjs(event.date).format("DD.MM.YYYY");
   console.log(formattedDate);
 
@@ -28,19 +28,41 @@ export const EventListUpdateModal = ({ isOpen, setIsOpen }) => {
     <BasicModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <h1 className="Modal-Header">Update Event</h1>
       <div className="EventModal-Content">
+        <h1 className="EventModal-Headlines">Datum :{formattedDate}</h1>
         <div className="EventModal-Container">
-          <h1 className="EventModal-Headlines">Datum :{formattedDate}</h1>
+          <div>
+            <EventInputElement
+              type={"text"}
+              value={event.title}
+              eventPropertyName={"title"}
+              label={"title"}
+            />
+          </div>
+        </div>
+        <div className="EventModal-Container">
+          {" "}
           <EventInputElement
             type={"text"}
-            placeholderText={"Gerichtenamen eintragen..."}
-            value={event.title}
-            eventPropertyName={"title"}
+            value={event.details}
+            eventPropertyName={"details"}
+            label={"details"}
+          />
+        </div>
+        <div className="EventModal-Container">
+          {" "}
+          <EventInputElement
+            type={"text"}
+            value={event.status}
+            eventPropertyName={"status"}
+            label={"status"}
           />
         </div>
 
-        <StyledButton variant="contained" onClick={() => submitEvent(event)}>
-          BESTÄTIGEN
-        </StyledButton>
+        <div>
+          <StyledButton variant="contained" onClick={() => submitEvent(event)}>
+            BESTÄTIGEN
+          </StyledButton>
+        </div>
       </div>
     </BasicModal>
   );

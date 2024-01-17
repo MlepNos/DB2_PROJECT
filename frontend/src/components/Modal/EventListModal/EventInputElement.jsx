@@ -6,11 +6,13 @@ const EventInputElement = ({
   placeholderText,
   value,
   eventPropertyName,
+  label,
 }) => {
   const { event, setEvent } = useEventListContext();
 
   return (
     <StyledTextField
+      label={label}
       variant="outlined"
       type={type}
       placeholder={placeholderText}

@@ -77,12 +77,12 @@ export const EventModal = ({ isOpen, setIsOpen, dates }) => {
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={6}>6</MenuItem>
+              <MenuItem value={1}>Meeting</MenuItem>
+              <MenuItem value={2}>Appointment</MenuItem>
+              <MenuItem value={3}>Conference</MenuItem>
+              <MenuItem value={4}>Birthday</MenuItem>
+              <MenuItem value={5}>Exam</MenuItem>
+              <MenuItem value={6}>Homework</MenuItem>
             </Select>
             <TextField
               className="EventModal-Fields textfield"
