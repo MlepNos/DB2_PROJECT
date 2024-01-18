@@ -1,0 +1,30 @@
+version: "1"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "6000:6000"
+    depends_on:
+      - sql
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  sql:
+    image: mlepnos/sql:v2
+    environment:
+      - USER=sa
+      - PASSWORD=Your_Password123
+      - SERVER=localhost
+      - DATABASE=Calendar_App
+      - DATABASEAUDIT=AuditTrail
+    ports:
+      - "1433:1433"
